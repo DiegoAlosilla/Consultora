@@ -12,15 +12,15 @@ namespace Consultora.Data
     {
         private readonly string _connectionString;
 
-        public ProyectosDAO(IConfiguration configuration)
+        public ProyectosDAO()
         {
-            _connectionString = configuration.GetConnectionString("defaultConnection");
+            _connectionString = "Data Source=.;Initial Catalog=DB_Consultora;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
         }
 
         public async Task<List<Proyecto>> GetAll()
         {
             using (SqlConnection sql = new SqlConnection(_connectionString))
-            {
+            {               
                 using (SqlCommand cmd = new SqlCommand("SP_GetAllProyects", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;

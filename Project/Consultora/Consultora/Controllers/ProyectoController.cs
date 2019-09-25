@@ -40,9 +40,10 @@ namespace Consultora.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task Post([FromBody] Proyecto value)
+        public async Task<ActionResult<Proyecto>> Post([FromBody] Proyecto value)
         {
             await _repository.Insert(value);
+            return Ok(new CreatedAtRouteResult("create BusinessOwner", new { id = value.Id }, value));
         }
 
         // PUT api/values/5

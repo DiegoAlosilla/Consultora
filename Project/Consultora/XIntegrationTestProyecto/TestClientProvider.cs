@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Consultora;
+using ConsultoraAPI;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;

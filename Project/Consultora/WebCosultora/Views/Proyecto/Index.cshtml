@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebCosultora.Models.Proyecto>
+
+@{
+    ViewData["Title"] = "Proyectos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid p-0 section-banner" style="background-image: url(https://www.belatrixsf.com/wp-content/uploads/2018/07/banner-insights-big.jpg);">
+    <div class="container section-banner-content-container">
+        <div class="section-banner-content">
+            <div class="page-title">
+                <div class="page-text" style="padding-left: 0">
+                    <h1 class="subtitle-2 white-text"> Proyectos</h1>
+                    <div class="line-decoration"></div>
+                    <p class="p-type1 white-text">Nuestros ultimos proyectos</p>
+                </div>
+            </div>
+            <div class="my-clearfix"></div>
+        </div>
+    </div>
+</section>
+
+<section class="container module-section">
+    <div class="row justify-content-center">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6 col-12 article-box-wrapper insights-w">
+                <div class="article-box" style="background-image: url(https://www.belatrixsf.com/wp-content/uploads/2018/07/blog-big.jpg);">
+                    <div class="overlay my-transition"></div>
+                    <div class="info-box text-center">
+                        <h1 class="subtitle white-text">@Html.DisplayFor(modelItem => item.Titulo)</h1>
+                        <p class="p-type1 white-text"> @Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <h3 class="highlight-1 article-cta white-text my-transition">LEER MAS</h3>
+                    </div>
+                    <a href="/blog"></a>
+                </div>
+            </div>
+        }
+
+    </div>
+</section>
+
+
+

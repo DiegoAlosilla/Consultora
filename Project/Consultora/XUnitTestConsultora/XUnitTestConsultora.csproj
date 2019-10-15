@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Consultora\Consultora.csproj" />
+    <ProjectReference Include="..\Consultora\ConsultoraAPI.csproj" />
   </ItemGroup>
 
 </Project>

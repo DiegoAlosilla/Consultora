@@ -2,63 +2,77 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Consultora.Data;
-using Consultora.Models.Entities;
+using ConsultoraAPI.Models.Entities;
+using ConsultoraAPI.Models.Service;
+using ConsultoraAPI.Models.ServiceImpl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Consultora.Controllers
+namespace ConsultoraAPI.Controllers
 {
-
     [Route("api/proyecto")]
     [ApiController]
-    public class ProyectoController : ControllerBase
+    public class ProyectoController : Controller
     {
-        private readonly ProyectosDAO _repository;
+        private IProyectoService proyectoService;
 
-        public ProyectoController(ProyectosDAO repository)
+        public ProyectoController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.proyectoService = new ProyectoService();
         }
 
-
-        // GET api/proyecto
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Proyecto>>> Get()
+        // GET api/values
+        [HttpGet]        
+        public ActionResult<IEnumerable<Proyecto>> Get()
         {
-            return await _repository.GetAll();
+            var proyectos = proyectoService.FindAll();
+            return proyectos.ToList();
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Proyecto>> Get(int id)
+        [HttpGet("get/{id}")]
+        public ActionResult<Proyecto> GetById(int id)
         {
-            var response = await _repository.GetById(id);
-            if (response == null) { return NotFound(); }
-            return response;
+            var proyecto = proyectoService.FindById(id);
+            return proyecto;
         }
 
         // POST api/values
-        [HttpPost]
-        public async Task<ActionResult<Proyecto>> Post([FromBody] Proyecto value)
+        [HttpPost("create")]
+        public ActionResult Post([FromBody] Proyecto proyecto)
         {
-            await _repository.Insert(value);
-            return Ok(new CreatedAtRouteResult("create BusinessOwner", new { id = value.Id }, value));
+            if (ModelState.IsValid)
+            {
+                proyectoService.Save(proyecto);
+                return Ok(new CreatedAtRouteResult("create Proyecto", new { id = proyecto.Id }, proyecto));
+            }
+            return BadRequest(ModelState);
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public async Task Put([FromRoute] int id,[FromBody] Proyecto value)
+        [HttpPut("update/{id}")]
+        public ActionResult Put(int id, [FromBody] Proyecto proyecto)
         {
-            await _repository.Update(value);
-
+            if(proyecto.Id != id)
+            {
+                return BadRequest();
+            }
+            proyectoService.Update(proyecto);
+            return View(proyecto);
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        [HttpDelete("delete/{id}")]
+        public ActionResult Delete(int id)
         {
-            await _repository.DeleteById(id);
+            var proyecto = proyectoService.FindById(id);
+            if(proyecto == null)
+            {
+                return NotFound();
+            }
+            proyectoService.Delete(id);
+            return View();
         }
+
     }
 }

@@ -1,4 +1,4 @@
-using Consultora.Models.Entities;
+using ConsultoraAPI.Models.Entities;
 using FluentAssertions;
 using Newtonsoft.Json;
 using System;

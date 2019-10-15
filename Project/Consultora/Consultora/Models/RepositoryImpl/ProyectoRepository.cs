@@ -1,46 +1,72 @@
-﻿using Consultora.Data;
-using Consultora.Models.Entities;
-using Consultora.Models.Repository;
+﻿using ConsultoraAPI.Data;
+using ConsultoraAPI.Models.Entities;
+using ConsultoraAPI.Models.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Consultora.Models.RepositoryImpl
+namespace ConsultoraAPI.Models.RepositoryImpl
 {
     public class ProyectoRepository : IProyectoRepository
     {
 
-        private readonly ProyectosDAO _dao;
+        private readonly ProyectosDAO dao;
 
-        public ProyectoRepository(ProyectosDAO repository)
+        public ProyectoRepository()
         {
-            this._dao = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.dao = new ProyectosDAO();
         }
 
-        public bool Delete(Proyecto t)
+        public bool Delete(int? id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dao.DeleteProyecto(id);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return true;
+
         }
 
         public List<Proyecto> FindAll()
         {
-            throw new NotImplementedException();
+            return dao.GetAll().ToList();
         }
 
         public Proyecto FindById(int? id)
         {
-            throw new NotImplementedException();
+            return dao.GetById(id);
         }
 
         public bool Save(Proyecto t)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dao.AddProyect(t);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool Update(Proyecto t)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                dao.Update(t);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

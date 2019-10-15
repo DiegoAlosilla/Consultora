@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>ConsultoraAPI</AssemblyName>
+    <RootNamespace>ConsultoraAPI</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\ServicesImpl\" />
-    <Folder Include="Models\Services\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

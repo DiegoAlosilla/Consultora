@@ -1,15 +1,15 @@
 using System;
 using Xunit;
 using Moq;
-using Consultora.Models.Entities;
-using Consultora.Data;
+using ConsultoraAPI.Models.Entities;
+using ConsultoraAPI.Data;
 using System.Threading.Tasks;
-using Consultora.Models.Repository;
+using ConsultoraAPI.Models.Repository;
 using System.Collections.Generic;
 
-namespace XUnitTestConsultora
+namespace XUnitTestConsultoraAPI
 {
-    public class UnitTestConsultora
+    public class UnitTestConsultoraAPI
     {
         [Fact]
         public void TestInsertProyecto()

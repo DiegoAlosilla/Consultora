@@ -1,116 +1,107 @@
-﻿using Consultora.Models.Entities;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using ConsultoraAPI.Models.Entities;
+using System.Data;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Consultora.Data
+//https://www.c-sharpcorner.com/article/crud-operations-using-asp-net-core-and-ado-net/
+
+namespace ConsultoraAPI.Data
 {
     public class ProyectosDAO
     {
-        private readonly string _connectionString;
+        private readonly string connectionString;
 
         public ProyectosDAO()
         {
-            _connectionString = "Data Source=.;Initial Catalog=DB_Consultora;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
+            connectionString = "Data Source=.;Initial Catalog=DB_Consultora;Integrated Security=True;Connect Timeout=30;Encrypt=False;";
         }
 
-        public async Task<List<Proyecto>> GetAll()
+        public IEnumerable<Proyecto> GetAll()
         {
-            using (SqlConnection sql = new SqlConnection(_connectionString))
-            {               
-                using (SqlCommand cmd = new SqlCommand("SP_GetAllProyects", sql))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    var response = new List<Proyecto>();
-                    await sql.OpenAsync();
+            List<Proyecto> proyectos = new List<Proyecto>();
 
-                    using (var reader = await cmd.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            response.Add(MapToValue(reader));
-                        }
-                    }
-
-                    return response;
-                }
-            }
-        }
-
-        public async Task<Proyecto> GetById(int Id)
-        {
-            using (SqlConnection sql = new SqlConnection(_connectionString))
+            using (SqlConnection sql = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SP_GetProyectById", sql))
+                SqlCommand cmd = new SqlCommand("SP_GetAllProyects", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+                sql.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@Id", Id));
-                    Proyecto response = null;
-                    await sql.OpenAsync();
-
-                    using (var reader = await cmd.ExecuteReaderAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            response = MapToValue(reader);
-                        }
-                    }
-
-                    return response;
+                    proyectos.Add(MapToValue(reader));
                 }
+                sql.Close();
+                return proyectos;
             }
         }
 
-        public async Task<bool> Insert(Proyecto value)
+        public void AddProyect(Proyecto proyecto)
         {
-            using (SqlConnection sql = new SqlConnection(_connectionString))
+            using (SqlConnection sql = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SP_InsertProyecto", sql))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@titulo", value.Titulo));
-                    cmd.Parameters.Add(new SqlParameter("@descripcion", value.Descripcion));
-                    await sql.OpenAsync();
-                    await cmd.ExecuteNonQueryAsync();
-                    return true;
-                }
+                SqlCommand cmd = new SqlCommand("SP_InsertProyecto", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@titulo", proyecto.Titulo);
+                cmd.Parameters.AddWithValue("@descripcion", proyecto.Descripcion);
+
+                sql.Open();
+                cmd.ExecuteNonQuery();
+                sql.Close();
             }
         }
 
-        public async Task Update(Proyecto value)
+        public void Update(Proyecto proyecto)
         {
-            using (SqlConnection sql = new SqlConnection(_connectionString))
+            using (SqlConnection sql = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SP_UpdateProyecto", sql))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@Id", value.Id));
-                    cmd.Parameters.Add(new SqlParameter("@titulo", value.Titulo));
-                    cmd.Parameters.Add(new SqlParameter("@descripcion", value.Descripcion));
-                    await sql.OpenAsync();
-                    await cmd.ExecuteNonQueryAsync();
-                    return;
-                }
+                SqlCommand cmd = new SqlCommand("SP_UpdateProyecto", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@Id", proyecto.Id);
+                cmd.Parameters.AddWithValue("@titulo", proyecto.Titulo);
+                cmd.Parameters.AddWithValue("@descripcion", proyecto.Descripcion);
+
+                sql.Open();
+                cmd.ExecuteNonQuery();
+                sql.Close();
             }
         }
 
-        public async Task DeleteById(int Id)
+        public void DeleteProyecto(int? id)
         {
-            using (SqlConnection sql = new SqlConnection(_connectionString))
+            using (SqlConnection sql = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SP_DeleteProyecto", sql))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@Id", Id));
-                    await sql.OpenAsync();
-                    await cmd.ExecuteNonQueryAsync();
-                    return;
-                }
+                SqlCommand cmd = new SqlCommand("SP_DeleteProyecto", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id",id);
+                sql.Open();
+                cmd.ExecuteNonQuery();
+                sql.Close();
             }
         }
+
+        public Proyecto GetById(int? id)
+        {
+            var proyecto = new Proyecto();
+
+            using (SqlConnection sql = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("SP_GetProyectById", sql);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", id);
+                sql.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    proyecto=MapToValue(reader);
+                }
+                sql.Close();
+                return proyecto;
+            }
+        }
+
+
 
         private Proyecto MapToValue(SqlDataReader reader)
         {

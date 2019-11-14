@@ -51,14 +51,14 @@ namespace ConsultoraAPI.Controllers
 
         // PUT api/values/5
         [HttpPut("update/{id}")]
-        public ActionResult Put(int id, [FromBody] Proyecto proyecto)
+        public ActionResult Edit(int id, [FromBody] Proyecto proyecto)
         {
             if(proyecto.Id != id)
             {
-                return BadRequest();
+                return BadRequest("error");
             }
             proyectoService.Update(proyecto);
-            return View(proyecto);
+            return Ok(proyecto);
         }
 
         // DELETE api/values/5
@@ -71,7 +71,7 @@ namespace ConsultoraAPI.Controllers
                 return NotFound();
             }
             proyectoService.Delete(id);
-            return View();
+            return Ok();
         }
 
     }

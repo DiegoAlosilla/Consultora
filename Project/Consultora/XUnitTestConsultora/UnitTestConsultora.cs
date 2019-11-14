@@ -48,8 +48,8 @@ namespace XUnitTestConsultoraAPI
                 Descripcion = "Lenguaje de programacion concurrente"
             };
             var mock = new Mock<IProyectoRepository>();
-            mock.Setup(x => x.Delete(proyecto)).Returns(true);
-            var result = mock.Object.Delete(proyecto);
+            mock.Setup(x => x.Delete(proyecto.Id)).Returns(true);
+            var result = mock.Object.Delete(proyecto.Id);
             Assert.True(result);
         }
 

@@ -17,7 +17,7 @@ namespace XIntegrationTestProyecto
         {
             using (var client = new TestClientProvider().Client)
             {
-                var response = await client.PostAsync("api/proyecto", new
+                var response = await client.PostAsync("api/proyecto/create", new
                     StringContent(JsonConvert.SerializeObject(new Proyecto()
                     {
                         Titulo = "IntegrationTest",
@@ -50,10 +50,11 @@ namespace XIntegrationTestProyecto
         {
             using (var client = new TestClientProvider().Client)
             {
-                var response = await client.PutAsync("api/proyecto/6", new
+                var response = await client.PutAsync("api/proyecto/update/2", new
                     StringContent(JsonConvert.SerializeObject(new Proyecto()
                     {
-                        Titulo = "IntegrationTest",
+                        Id = 2,
+                        Titulo = "update 4",
                         Descripcion = "Prubas de Integracion"
                     }), Encoding.UTF8, "application/json"));
 
@@ -69,7 +70,7 @@ namespace XIntegrationTestProyecto
         {
             using (var client = new TestClientProvider().Client)
             {
-                var response = await client.DeleteAsync("api/proyecto/7");
+                var response = await client.DeleteAsync("api/proyecto/delete/2");
 
                 response.EnsureSuccessStatusCode();
                 response.StatusCode.Should().Be(HttpStatusCode.OK);

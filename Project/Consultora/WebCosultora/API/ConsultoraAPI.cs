@@ -11,7 +11,7 @@ namespace WebCosultora.API
         public HttpClient Initial()
         {
             var Client = new HttpClient();
-            Client.BaseAddress = new Uri("https://localhost:44368/api/");
+            Client.BaseAddress = new Uri("http://localhost:50361/api/");
             return Client;
         }
     }

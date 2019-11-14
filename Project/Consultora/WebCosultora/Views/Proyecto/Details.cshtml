@@ -5,33 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<section class="container-fluid p-0 section-banner" style="background-image: url(https://www.belatrixsf.com/wp-content/uploads/2018/07/banner-insights-big.jpg);">
+    <div class="container section-banner-content-container">
+        <div class="section-banner-content">
+            <div class="page-title">
+                <div class="page-text" style="padding-left: 0">
+                    <h1 class="subtitle-2 white-text"> Proyectos</h1>
+                    <div class="line-decoration"></div>
+                    <p class="p-type1 white-text">Nuestros ultimos proyectos</p>
+                </div>
+            </div>
+            <div class="my-clearfix"></div>
+        </div>
+    </div>
+</section>
 
-<div>
-    <h4>Proyecto</h4>
-    <hr />
+<div class="row justify-content-center" style="margin-top: 5%; margin-bottom: 5%">
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-md-4">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-md-8">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-md-4">
             @Html.DisplayNameFor(model => model.Titulo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-md-8">
             @Html.DisplayFor(model => model.Titulo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-md-4">
             @Html.DisplayNameFor(model => model.Descripcion)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-md-8">
             @Html.DisplayFor(model => model.Descripcion)
         </dd>
     </dl>
+    <div class="row">
+        <form asp-action="Delete">
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" }) |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

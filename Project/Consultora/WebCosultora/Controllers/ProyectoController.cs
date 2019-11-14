@@ -109,26 +109,9 @@ namespace WebCosultora.Controllers
 
         }
 
-        // GET: Proyecto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            Proyecto proyecto = new Proyecto();
-            var responseTask = client.Initial().GetAsync($"proyecto/get/{id}");
-            responseTask.Wait();
-            var result = responseTask.Result;
-            if (result.IsSuccessStatusCode)
-            {
-                var readTask = result.Content.ReadAsAsync<Proyecto>();
-                readTask.Wait();
-                proyecto = readTask.Result;
-            }
-            return View(proyecto);
-        }
-
         // POST: Proyecto/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Proyecto proyecto)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
             var responseTask = client.Initial().DeleteAsync($"proyecto/delete/{id}");
             responseTask.Wait();          

@@ -75,7 +75,7 @@ namespace ConsultoraAPI.Data
                 SqlCommand cmd = new SqlCommand("SP_DeleteProyecto", sql);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id",id);
-                sql.Open();
+                sql.Open(); 
                 cmd.ExecuteNonQuery();
                 sql.Close();
             }

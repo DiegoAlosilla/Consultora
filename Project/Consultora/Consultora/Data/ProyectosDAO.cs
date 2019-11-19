@@ -94,7 +94,7 @@ namespace ConsultoraAPI.Data
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    proyecto=MapToValue(reader);
+                   proyecto=MapToValue(reader);
                 }
                 sql.Close();
                 return proyecto;

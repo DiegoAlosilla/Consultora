@@ -5,34 +5,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Proyecto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Titulo" class="control-label"></label>
-                <input asp-for="Titulo" class="form-control" />
-                <span asp-validation-for="Titulo" class="text-danger"></span>
+<section class="container-fluid p-0 section-banner" style="background-image: url(https://www.belatrixsf.com/wp-content/uploads/2018/07/banner-insights-big.jpg);">
+    <div class="container section-banner-content-container">
+        <div class="section-banner-content">
+            <div class="page-title">
+                <div class="page-text" style="padding-left: 0">
+                    <h1 class="subtitle-2 white-text">Crear Proyectos</h1>
+                    <div class="line-decoration"></div>
+                    <p class="p-type1 white-text">Crear proyecto</p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <div class="my-clearfix"></div>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+              <div class="row justify-content-center" style="margin-left: 30%; margin-right: 30%; margin-top: 5%">
+                  <div class="col-md-12">
+                      <form asp-action="Create">
+                          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                          <div class="form-group">
+                              <label asp-for="Titulo" class="control-label"></label>
+                              <input asp-for="Titulo" class="form-control" />
+                              <span asp-validation-for="Titulo" class="text-danger"></span>
+                          </div>
+                          <div class="form-group">
+                              <label asp-for="Descripcion" class="control-label"></label>
+                              <input asp-for="Descripcion" class="form-control" />
+                              <span asp-validation-for="Descripcion" class="text-danger"></span>
+                          </div>
+                          <div class="form-group">
+                              <input type="submit" value="Create" class="btn btn-warning" style="color: white" />
+                          </div>
+                      </form>
+                  </div>
+              </div>
+
+              <div class="row" style="margin-left: 30%; margin-right: 30%; margin-bottom: 5%">
+                  <div class="col-md-4">
+                      <a asp-action="Index">Back to List</a>
+                  </div>
+              </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

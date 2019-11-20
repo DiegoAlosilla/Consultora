@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<WebCosultora.Models.Proyecto>
-
 @{
     ViewData["Title"] = "Proyectos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <section class="container-fluid p-0 section-banner" style="background-image: url(https://www.belatrixsf.com/wp-content/uploads/2018/07/banner-insights-big.jpg);">
     <div class="container section-banner-content-container">
         <div class="section-banner-content">
@@ -20,9 +18,14 @@
     </div>
 </section>
 
+<div class="row justify-content-center" style="margin-top:5%">
+    <div class="col-md-2 offset-10">
+        @Html.ActionLink("Nuevo Proyecto", "Create", null,null, new { @class = "btn btn-warning", @style= "color: white" })
+    </div>
+</div>
+
 <section class="container module-section">
     <div class="row justify-content-center">
-
         @foreach (var item in Model)
         {
             <div class="col-lg-6 col-12 article-box-wrapper insights-w">
@@ -33,13 +36,11 @@
                         <p class="p-type1 white-text"> @Html.DisplayFor(modelItem => item.Descripcion)</p>
                         <h3 class="highlight-1 article-cta white-text my-transition">LEER MAS</h3>
                     </div>
-                    <a href="/blog"></a>
+
+                    <a href="Proyecto/Details/@item.Id" id="Detail"></a>
                 </div>
             </div>
         }
-
     </div>
 </section>
-
-
 
